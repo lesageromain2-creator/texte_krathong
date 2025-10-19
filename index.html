@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Contrôle LED</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: white;
+      text-align: center;
+      padding-top: 80px;
+    }
+    input[type="text"] {
+      width: 300px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-left: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #2196f3;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0b7dda;
+    }
+  </style>
+</head>
+<body>
+  <h1>💡 Envoyer un message à l’Arduino</h1>
+  <form onsubmit="sendMessage(event)">
+    <input type="text" id="message" placeholder="Écris ton message ici..." required>
+    <button type="submit">Envoyer</button>
+  </form>
+  <p id="status"></p>
+
+  <script>
+    async function sendMessage(event) {
+      event.preventDefault();
+      const msg = document.getElementById('message').value;
+      const response = await fetch('led.txt', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'text/plain' },
+        body: msg
+      });
+      document.getElementById('status').textContent = "✅ Message envoyé ! Recharge la page Arduino.";
+    }
+  </script>
+</body>
+</html>
